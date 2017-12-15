@@ -1,0 +1,38 @@
+{
+  "name": "weather",
+  "version": "1.0.0",
+  "description": "Weather finder for a location",
+  "main": "src/weather.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha --recursive",
+    "test:watch": "mocha --recursive --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ServerlessByExample/functions.git"
+  },
+  "keywords": [
+    "serverless",
+    "fission"
+  ],
+  "author": "Krishnaswamy Subramanian",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ServerlessByExample/functions/issues"
+  },
+  "homepage": "https://github.com/ServerlessByExample/functions#readme",
+  "dependencies": {
+    "request": "^2.83.0",
+    "request-promise-native": "^1.0.5"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^4.0.1",
+    "proxyquire": "^1.8.0",
+    "sinon": "^4.1.3"
+  }
+}
