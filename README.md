@@ -1,2 +1,2 @@
 # functions
-Repo for fiission functions
+Repo for fission functions
