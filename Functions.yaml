@@ -2,4 +2,11 @@
   method: POST
   env: nodejs
   name: weather
+  type: code
   path: ./node/src/weather.js
+- url: /fibonacci
+  method: GET
+  env: go-env
+  name: fibonacci
+  type: deploy
+  path: ./go/fibonacci.so
