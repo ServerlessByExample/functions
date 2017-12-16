@@ -16,8 +16,10 @@ const run = async () => {
       tasks: [
         'cd /src/go',
         'go test',
-      ]
-    },
+      ],
+    }
+  ));
+	group.add(createJob(
     {
       id: 2,
       name: 'test-node',
@@ -28,7 +30,7 @@ const run = async () => {
         'yarn test',
       ],
     }
-  ));
+	));
 
   await group.runAll();
 };
