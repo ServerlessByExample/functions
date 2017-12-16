@@ -45,10 +45,24 @@ const runGo = async () => {
     }
   ));
   await group.runEach();
-}
+};
+
+const deploy = async () => {
+  await createJob(
+    {
+      name: 'deploy',
+      image: 'jskswamy/fission-deployer:latest',
+      tasks: [
+        'cd /src/',
+        'deployer',
+      ],
+    }
+  ).run();
+};
 
 const run = async () => {
-  await Promise.all([runGo(), runNode()])
+  await Promise.all([runGo(), runNode()]);
+  await deploy();
 };
 
 events.on("exec", async (brigadeEvent, project) => {
