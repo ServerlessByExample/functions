@@ -1,12 +1,28 @@
 package main
 
 import (
+	"encoding/json"
+	"log"
 	"net/http"
+	"strconv"
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
-	msg := "Hello, World!"
-	w.Write([]byte(msg))
+	param := r.URL.Query().Get("limit")
+	var limit int
+	if param == "" {
+		limit = 1
+	} else {
+		limit, _ = strconv.Atoi(param)
+	}
+
+	b, err := json.Marshal(Fibonacci(limit))
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	w.Write(b)
 }
 
 func Fibonacci(limit int) []int {
