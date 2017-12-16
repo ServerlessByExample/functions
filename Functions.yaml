@@ -1,0 +1,5 @@
+- url: /weather
+  method: POST
+  env: nodejs
+  name: weather
+  path: ./node/src/weather.js
