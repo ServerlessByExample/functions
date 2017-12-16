@@ -1,18 +1,19 @@
 const { events, Job, Group } = require('brigadier');
 
-const createJob = ({id, name, image, tasks}) => {
-  let job = new Job(`${name}-${id}`, image);
+const artifacts = "/mnt/brigade/share/fibonacci"
+
+const createJob = ({name, image, tasks}) => {
+  let job = new Job(name, image);
   job.tasks = tasks;
   return job;
 };
 
-const run = async () => {
+const runGo = async () => {
   let group = new Group();
   group.add(createJob(
     {
-      id: 1,
       name: 'test-go',
-      image: 'golang:1.8-jessie',
+      image: 'golang:1.9.2',
       tasks: [
         'cd /src/go',
         'go test',
@@ -21,18 +22,51 @@ const run = async () => {
   ));
 	group.add(createJob(
     {
-      id: 2,
+      name: 'build-go',
+      image: 'golang:1.9.2',
+      tasks: [
+        'cd /src/go',
+        'go build -buildmode=plugin -o fibonacci.so fibonacci.go',
+      ],
+    }
+	));
+	await group.runEach();
+}
+
+const runNode = async () => {
+  let group = new Group();
+  group.add(createJob(
+    {
       name: 'test-node',
       image: 'node:latest',
       tasks: [
         'cd /src/node',
         'yarn install',
-        'yarn test',
+        'yarn test'
       ],
     }
-	));
+  ));
+  await group.runEach();
+}
 
-  await group.runAll();
+const deploy = async () => {
+  await createJob(
+    {
+      name: 'deploy',
+      image: 'jskswamy/fission-deployer:latest',
+      tasks: [
+        'cd /src/',
+        'deployer',
+      ],
+    }
+  ).run();
+}
+
+const run = async () => {
+  await runGo();
+  await runNode();
+  await deploy();
+
 };
 
 events.on("exec", async (brigadeEvent, project) => {
